@@ -294,7 +294,7 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <com.example.IdCard.TransitionView
+    <com.hunter_lc.idcard.TransitionView
         android:id="@+id/ani_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

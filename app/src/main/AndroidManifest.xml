@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.meetingmanager">
+    package="com.hunter_lc.idcard">
 
     <!-- wifi internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,27 +24,27 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity
-            android:name="com.example.IdCard.LoginActivity">
+            android:name="com.hunter_lc.idcard.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.IdCard.MainActivity" />
-        <activity android:name="com.example.IdCard.RecyclerViewFragment" />
-        <activity android:name="com.example.IdCard.MeetingDetailActivity" />
+        <activity android:name="com.hunter_lc.idcard.MainActivity" />
+        <activity android:name="com.hunter_lc.idcard.RecyclerViewFragment" />
+        <activity android:name="com.hunter_lc.idcard.MeetingDetailActivity" />
         <activity
-            android:name="com.example.IdCard.MessageActivity"
+            android:name="com.hunter_lc.idcard.MessageActivity"
             android:label="我的消息"
             android:theme="@style/AppBaseTheme" />
-        <activity android:name="com.example.IdCard.RoomSelectionActivity" />
+        <activity android:name="com.hunter_lc.idcard.RoomSelectionActivity" />
         <activity
-            android:name="com.example.IdCard.SpinnerActivity"
+            android:name="com.hunter_lc.idcard.SpinnerActivity"
             android:theme="@style/AppBaseTheme">
 
         </activity>
-        <activity android:name="com.example.IdCard.RoomDetailActivity">
+        <activity android:name="com.hunter_lc.idcard.RoomDetailActivity">
 
         </activity>
     </application>
