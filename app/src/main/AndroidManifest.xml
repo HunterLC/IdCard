@@ -13,6 +13,13 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- sdcard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--摄像头权限-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!--SD卡读写权限-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--添加悬浮窗口权限-->
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -34,6 +41,7 @@
         <activity android:name="com.hunter_lc.idcard.MainActivity" />
         <activity android:name="com.hunter_lc.idcard.RecyclerViewFragment" />
         <activity android:name="com.hunter_lc.idcard.MeetingDetailActivity" />
+        <activity android:name=".farksa.tdk.ocr.CameraMainActivity" />
         <activity
             android:name="com.hunter_lc.idcard.MessageActivity"
             android:label="我的消息"
@@ -43,6 +51,13 @@
             android:name="com.hunter_lc.idcard.SpinnerActivity"
             android:theme="@style/AppBaseTheme">
 
+        </activity>
+        <activity android:name=".farksa.tdk.ocr.NextActivity"
+            android:theme="@style/AppTheme1">
+            <intent-filter>
+                <action android:name="com.hunter_lc.idcard.farkas.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name="com.hunter_lc.idcard.RoomDetailActivity">
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/parentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.hunter_lc.idcard.farkas.tdk.view.CameraSurface
+        android:id="@id/cameraSurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"/>
+    <com.hunter_lc.idcard.farkas.tdk.view.CanvasSurface
+        android:id="@id/canvasSurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"/>
+    <Button
+        android:id="@id/takePicture"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="@dimen/dp48"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fitsSystemWindows="true"
+        android:text="@string/paizhao"/>
+</RelativeLayout>

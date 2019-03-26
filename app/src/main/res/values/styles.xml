@@ -48,6 +48,19 @@
         <item name="android:textColor">@color/primary_dark</item>
     </style>
 
+    <style name="myact">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_out</item>
+    </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme1" parent="android:Theme.NoTitleBar">
+        <item name="@android:windowAnimationStyle">@style/myact</item>
+    </style>
+    <style name="CustomProgressDialog" parent="@android:style/Theme.Dialog">
+    </style>
+
 
 
 </resources>
