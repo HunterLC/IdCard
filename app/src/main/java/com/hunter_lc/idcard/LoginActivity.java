@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity
 
     private TransitionView mAnimView;
     SpinKitView spinKitView;
-    Button faceLoginButton,loginButton;
+    Button loginButton;
     EditText userAccount,userPassword;
     public static String LOGIN_SUCCESS_TOKEN = null;  //全局使用的token
 
@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity
                         .apply();
                 //IN_SUCCESS_TOKEN = login.result.token;   //全局使用的token
                 spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
-                faceLoginButton.setEnabled(false);//人脸识别键不可触碰
                 loginButton.setEnabled(false);//登陆键不可触碰
                 userAccount.setFocusable(false);//账号编辑框不可点击
                 userPassword.setFocusable(false);//密码框不可点击

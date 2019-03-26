@@ -26,6 +26,7 @@ public class UserViewFragment extends Fragment {
         return  new UserViewFragment();
     }
     final List<String> userList = new ArrayList<>();
+    User user = new User();
 
     RecyclerView mRecyclerView;
     @Override
@@ -40,7 +41,7 @@ public class UserViewFragment extends Fragment {
                 mRecyclerView.setHasFixedSize(true);
                 mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
                 initUserData();
-                mRecyclerView.setAdapter(new UserViewPagerAdapter(userList));
+                mRecyclerView.setAdapter(new UserViewPagerAdapter(user,userList));
     }
 
     private void initUserData() {
@@ -49,7 +50,7 @@ public class UserViewFragment extends Fragment {
         List<User> users = DataSupport.select("*")
                                       .where("account = ?",sharedPreferences.getString("account",null))
                                       .find(User.class);
-        Toast.makeText(getActivity(),users.get(1).getBirth(),Toast.LENGTH_LONG).show();
+            user.setPersonalPhoto(users.get(1).getPersonalPhoto());
             /*user("000");//用户头像
             user.setId(2019);//用户编号
             user.setName("刘畅");//用户姓名
@@ -64,21 +65,7 @@ public class UserViewFragment extends Fragment {
             userList.add(users.get(1).getBirth());
             userList.add(users.get(1).getNickName());
             userList.add(users.get(1).getSex()==1?"男":"女");
-        /*User user = new User();
-        user.setBirth("000");//用户头像
-        user.setId(2019);//用户编号
-        user.setName("刘畅");//用户姓名
-        user.setBirth("项目经理");//用户职称
-        user.setNickName("畅畅快报");//用户名
-        user.setSex(1);//用户性别
 
-        //将用户信息加入到list列表中
-        userList.add(user.getBirth());
-        userList.add(String.valueOf(user.getId()));
-        userList.add(user.getName());
-        userList.add(user.getBirth());
-        userList.add(user.getNickName());
-        userList.add(user.getSex()==1?"男":"女");*/
 
     }
 
