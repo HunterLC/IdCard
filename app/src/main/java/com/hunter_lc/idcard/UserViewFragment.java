@@ -1,5 +1,7 @@
 package com.hunter_lc.idcard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,9 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.hunter_lc.idcard.db.UserInfo;
+import com.hunter_lc.idcard.db.User;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +26,6 @@ public class UserViewFragment extends Fragment {
         return  new UserViewFragment();
     }
     final List<String> userList = new ArrayList<>();
-    final UserInfo user = new UserInfo();  //个人信息
 
     RecyclerView mRecyclerView;
     @Override
@@ -41,24 +45,41 @@ public class UserViewFragment extends Fragment {
 
     private void initUserData() {
         //获取用户信息
-        requestUserInfo();
-        user.setAvatar("000");//用户头像
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        List<User> users = DataSupport.select("*")
+                                      .where("account = ?",sharedPreferences.getString("account",null))
+                                      .find(User.class);
+        Toast.makeText(getActivity(),users.get(1).getBirth(),Toast.LENGTH_LONG).show();
+            /*user("000");//用户头像
+            user.setId(2019);//用户编号
+            user.setName("刘畅");//用户姓名
+            user.setTitle("项目经理");//用户职称
+            user.setUsername("畅畅快报");//用户名
+            user.setMale(1);//用户性别*/
+            //将用户信息加入到list列表中
+            //userList.add(String.user.getPersonalPhoto());
+            userList.add("000");
+            userList.add(String.valueOf(users.get(1).getId()));
+            userList.add(users.get(1).getName());
+            userList.add(users.get(1).getBirth());
+            userList.add(users.get(1).getNickName());
+            userList.add(users.get(1).getSex()==1?"男":"女");
+        /*User user = new User();
+        user.setBirth("000");//用户头像
         user.setId(2019);//用户编号
         user.setName("刘畅");//用户姓名
-        user.setTitle("项目经理");//用户职称
-        user.setUsername("畅畅快报");//用户名
-        user.setMale(1);//用户性别
+        user.setBirth("项目经理");//用户职称
+        user.setNickName("畅畅快报");//用户名
+        user.setSex(1);//用户性别
 
         //将用户信息加入到list列表中
-        userList.add(user.getAvatar());
+        userList.add(user.getBirth());
         userList.add(String.valueOf(user.getId()));
         userList.add(user.getName());
-        userList.add(user.getTitle());
-        userList.add(user.getUsername());
-        userList.add(user.getMale()==1?"男":"女");
+        userList.add(user.getBirth());
+        userList.add(user.getNickName());
+        userList.add(user.getSex()==1?"男":"女");*/
+
     }
 
-    public void requestUserInfo(){
-        String userInfoUrl = "http://47.107.251.255/user/update";
-    }
 }

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hunter_lc.idcard.db.UserInfo;
+import com.hunter_lc.idcard.db.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
 public class UserViewPagerAdapter extends RecyclerView.Adapter<UserViewPagerAdapter.mViewHolder>{
 
     Context context;
-    UserInfo newUser;
-    List<String> userList = new ArrayList<>();
+    User newUser;
+    List<String> userList = new ArrayList<String>();
     List<String> label = new ArrayList<>();  //信息标签
     public UserViewPagerAdapter(List<String> userList) {
         this.userList = userList;
@@ -30,7 +30,7 @@ public class UserViewPagerAdapter extends RecyclerView.Adapter<UserViewPagerAdap
         label.add("我的头像");
         label.add("我的编号");
         label.add("我的姓名");
-        label.add("我的职称");
+        label.add("我的生日");
         label.add("我的昵称");
         label.add("我的性别");
     }
@@ -64,15 +64,14 @@ public class UserViewPagerAdapter extends RecyclerView.Adapter<UserViewPagerAdap
         int i=position;
         holder.title.setText(label.get(i));
         if(label.get(i).equals("我的头像"))
-           // holder.faceimg.setImageBitmap(userList.get(i).getImg())
-            ;
+           holder.faceimg.setImageBitmap(null);
         else
             holder.faceimg.setImageBitmap(null);
         if(!label.get(i).equals("我的头像"))
             holder.decription.setText(userList.get(i));
         else
             holder.decription.setText("");
-        if(label.get(i).equals("我的编号")||label.get(i).equals("我的姓名")||label.get(i).equals("我的职称"))
+        if(label.get(i).equals("我的编号")||label.get(i).equals("我的姓名")||label.get(i).equals("我的生日"))
             holder.picture.setImageBitmap(null);
         else
             ;

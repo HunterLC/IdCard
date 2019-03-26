@@ -1,9 +1,15 @@
 package com.hunter_lc.idcard;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hunter_lc.idcard.db.User;
 import com.hunter_lc.idcard.gson.Login;
 import com.hunter_lc.idcard.util.HttpUtil;
 import com.hunter_lc.idcard.util.Utility;
@@ -22,11 +29,14 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Circle;
 
-import java.io.IOException;
+import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 
 
 public class LoginActivity extends AppCompatActivity
@@ -53,20 +63,28 @@ public class LoginActivity extends AppCompatActivity
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+        Connector.getDatabase();  //创建数据库
         SharedPreferences prefs = getSharedPreferences("loginInfo",Context.MODE_PRIVATE);
         if(prefs.getString("account",null)!=null && prefs.getString("password",null)!=null)
             gotoMainActivity();
+        else{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+            User user = new User();
+            user.setAccount("88886666");
+            user.setActLevel(0);
+            user.setBirth("1998-11-19");
+            user.setId(1);
+            user.setLoginTime(sdf.format(new Date()));
+            user.setName("高作缘");
+            user.setNickName("Stonecutter");
+            user.setSex(1);
+            user.setPassword("123456");
+            user.setPersonalPhoto(img(R.drawable.ic_icon));
+            user.save();
+        }
 
         mAnimView = findViewById(R.id.ani_view);
         loginButton = (Button)findViewById(R.id.btn_registered_login);
-        faceLoginButton = (Button)findViewById(R.id.btn_registered_facelogin);
-        faceLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {    //相应人脸识别按键
-               // Intent intent = new Intent(LoginActivity.this,TestActivity.class); //人脸模块
-                //startActivity(intent);
-            }
-        });
 
         mAnimView.setOnAnimationEndListener(new TransitionView.OnAnimationEndListener()
         {
@@ -77,6 +95,14 @@ public class LoginActivity extends AppCompatActivity
                 gotoMainActivity();
             }
         });
+    }
+    //将drawable转换成可以用来存储的byte[]类型
+    public byte[] img(int id)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(id)).getBitmap();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     private void gotoMainActivity()
@@ -90,11 +116,6 @@ public class LoginActivity extends AppCompatActivity
         requestLogin();
     }
 
-
-    public String toJson(String username,String password,String face) {
-        return "{\"username\":\"" + username + "\"," + "\"password\":\"" + password + "\","+"\"face\":\""+face+"\"}";
-    }
-
     public void requestLogin(){
         userAccount = (EditText)findViewById(R.id.Ed_uerPhoneNumber);
         userPassword = (EditText)findViewById(R.id.Ed_uerPassword);
@@ -104,55 +125,26 @@ public class LoginActivity extends AppCompatActivity
         Sprite circle = new Circle();
         spinKitView.setIndeterminateDrawable(circle);
         spinKitView.setVisibility(View.VISIBLE);
-        Toast.makeText(LoginActivity.this,"信息加载中...",Toast.LENGTH_SHORT).show();
-        //网络请求
-        String loginUrl = "http://localhost:8181/user/logIn";
-        String json = toJson(account,password,"asdasd");
-        Log.d("LoginActivity  json's value ",json);
-        HttpUtil.sendOkHttpRequest(loginUrl,json,new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        spinKitView.setVisibility(View.INVISIBLE);
-                        Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
-                    }
-                });
+        List<User> users = DataSupport.findAll(User.class);
+        for(User loginUser: users)
+            if(loginUser.getAccount().equals(account) && loginUser.getPassword().equals(password)) {   //登录成功
+                SharedPreferences loginSP = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);  //保存登录信息，只能被本应用所访问
+                loginSP.edit()              //记住密码自动登录
+                        .putString("account", account)
+                        .putString("password", password)
+                        .apply();
+                //IN_SUCCESS_TOKEN = login.result.token;   //全局使用的token
+                spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
+                faceLoginButton.setEnabled(false);//人脸识别键不可触碰
+                loginButton.setEnabled(false);//登陆键不可触碰
+                userAccount.setFocusable(false);//账号编辑框不可点击
+                userPassword.setFocusable(false);//密码框不可点击
+                mAnimView.startAnimation();   //登陆成功动画
+                Toast.makeText(LoginActivity.this,"头像信息"+loginUser.getPersonalPhoto().toString(),Toast.LENGTH_LONG).show();
+            }else{
+                spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
+                Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
             }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-                Log.d("222",responseText);
-                final Login login = Utility.handleLoginResponse(responseText);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(login != null && 200 == login.apiStatus){   //登录成功
-                            //SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
-                            SharedPreferences loginSP = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);  //保存登录信息，只能被本应用所访问
-                            loginSP.edit()              //记住密码自动登录
-                                    .putString("account",account)
-                                    .putString("password",password)
-                                    .apply();
-                            LOGIN_SUCCESS_TOKEN = login.result.token;   //全局使用的token
-                            spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
-                            faceLoginButton.setEnabled(false);//人脸识别键不可触碰
-                            loginButton.setEnabled(false);//登陆键不可触碰
-                            userAccount.setFocusable(false);//账号编辑框不可点击
-                            userPassword.setFocusable(false);//密码框不可点击
-                            mAnimView.startAnimation();   //登陆成功动画
-                            Toast.makeText(LoginActivity.this,login.result.token,Toast.LENGTH_LONG).show();
-                        } else{
-                            spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
-                            Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
-        });
     }
 }
 

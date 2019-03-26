@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
             public CharSequence getPageTitle(int position) {
                 switch (position % TAPS) {
                     case 0:
-                        return "会议预约";
+                        return "拍照加密";
                     case 1:
-                        return "参会记录";
+                        return "收发记录";
                     case 2:
                         return "个人中心";
 
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 .addDrawerItems(
                         setSectionItem_user(), //个人中心分隔条
                         setPrimaryItem_userInfo(),//我的信息 菜单条
-                        setPrimaryItem_history(),//历史会议记录 菜单条
+                        setPrimaryItem_history(),//收发记录 菜单条
                         setExpandableItem_setting(),
                         setSwitchItem1(),
                         setSwitchItem2(),
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                         switch(choose){
                             case 2:mViewPager.getViewPager().setCurrentItem(2);
                                 break;//个人信息
-                            case 3:mViewPager.getViewPager().setCurrentItem(1);//参会记录
+                            case 3:mViewPager.getViewPager().setCurrentItem(1);
                                 break;
                             case 5:
                                 Intent intent = new Intent(MainActivity.this,SpinnerActivity.class);
@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
 
     private PrimaryDrawerItem setPrimaryItem_history() {
         primaryItem_history = new PrimaryDrawerItem()
-                .withName("参会记录")
+                .withName("收发记录")
                 .withDescription("")
                 .withIcon(GoogleMaterial.Icon.gmd_accounts_list_alt)
                 .withBadge("1") //气泡

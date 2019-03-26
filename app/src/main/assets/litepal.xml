@@ -1,10 +1,8 @@
 <litepal>
-    <dbname value="meeting_manager"/>
+    <dbname value="idcard"/>
     <version value="1"/>
     <list>
-        <mapping class="com.hunter_lc.idcard.db.MeetingInfo"/>
-        <mapping class="com.hunter_lc.idcard.db.MessageInfo"/>
-        <mapping class="com.hunter_lc.idcard.db.RoomInfo"/>
-        <mapping class="com.hunter_lc.idcard.db.UserInfo"/>
+        <mapping class="com.hunter_lc.idcard.db.Record"> </mapping>
+        <mapping class="com.hunter_lc.idcard.db.User"> </mapping>
     </list>
 </litepal>
