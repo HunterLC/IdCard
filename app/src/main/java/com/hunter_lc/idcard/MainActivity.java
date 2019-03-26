@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.hunter_lc.idcard.db.User;
+import com.hunter_lc.idcard.util.Utility;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -40,6 +42,10 @@ import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private MaterialViewPager mViewPager;
@@ -151,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             public Fragment getItem(int position) {
                 switch (position % TAPS) {
                     case 0:
-                        return new OrderViewFragment();
+                        return new CameraViewFragment();
                     case 1:
                         return RecyclerViewFragment.newHistoryInstance();
                     case 2:
@@ -247,21 +253,17 @@ public class MainActivity extends AppCompatActivity {
      * ①IProfile创建登录用户对象
      */
     private void setProfile() {
+        //获取用户信息
+        SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        List<User> users = DataSupport.select("*")
+                .where("account = ?",sharedPreferences.getString("account",null))
+                .find(User.class);
         profile = new ProfileDrawerItem()
-                .withName("ksm")
-                .withEmail("626289512@qq.com")
-                .withIcon("http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg")
+                .withName(users.get(1).getName())
+                .withEmail(users.get(1).getAccount())
+                .withIcon(Utility.getPicFromBytes(users.get(1).getPersonalPhoto(),null))
                 .withIdentifier(100);//标识符，当设置监听事件时可以根据这个来区别对象
-        profile1 = new ProfileDrawerItem()
-                .withName("lc")
-                .withEmail("411887055@qq.com")
-                .withIcon("http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg")
-                .withIdentifier(101);//标识符，当设置监听事件时可以根据这个来区别对象
-        profile2 = new ProfileDrawerItem()
-                .withName("ctc")
-                .withEmail("411887055@qq.com")
-                .withIcon("http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg")
-                .withIdentifier(102);//标识符，当设置监听事件时可以根据这个来区别对象
+
     }
 
     /**

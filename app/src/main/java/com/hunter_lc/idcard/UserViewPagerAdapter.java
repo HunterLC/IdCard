@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hunter_lc.idcard.db.User;
+import com.hunter_lc.idcard.util.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class UserViewPagerAdapter extends RecyclerView.Adapter<UserViewPagerAdap
         int i=position;
         holder.title.setText(label.get(i));
         if(label.get(i).equals("我的头像"))
-           holder.faceimg.setImageBitmap(getPicFromBytes(user.getPersonalPhoto(),null));
+           holder.faceimg.setImageBitmap(Utility.getPicFromBytes(user.getPersonalPhoto(),null));
         else
             holder.faceimg.setImageBitmap(null);
         if(!label.get(i).equals("我的头像"))
@@ -87,39 +88,6 @@ public class UserViewPagerAdapter extends RecyclerView.Adapter<UserViewPagerAdap
         return userList.size();
     }
 
-    /**将字节数组转换为ImageView可调用的Bitmap对象
-     * @param
-     * @param bytes
-     * @param opts
-     * @return Bitmap
-     */
-    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
-        if (bytes != null)
-            if (opts != null)
-                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,
-                        opts);
-            else
-                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        return null;
-    }
-    /**  图片缩放
-     * @param
-     * @param bitmap 对象
-     * @param w 要缩放的宽度
-     * @param h 要缩放的高度
-     * @return newBmp 新 Bitmap对象
-     */
-    public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h){
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        Matrix matrix = new Matrix();
-        float scaleWidth = ((float) w / width);
-        float scaleHeight = ((float) h / height);
-        matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-                matrix, true);
-        return newBmp;
-    }
 
 
 }

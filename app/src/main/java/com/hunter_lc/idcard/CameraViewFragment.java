@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 
-public class OrderViewFragment extends Fragment {
+public class CameraViewFragment extends Fragment {
     public static Fragment newOrderInstance(){
-        return  new OrderViewFragment();
+        return  new CameraViewFragment();
     }
 
 
@@ -32,7 +32,7 @@ public class OrderViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
-        mRecyclerView.setAdapter(new OrderViewPagerAdapter());
+        mRecyclerView.setAdapter(new CameraViewPagerAdapter());
     }
 
 }
