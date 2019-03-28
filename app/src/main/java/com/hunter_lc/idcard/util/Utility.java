@@ -2,12 +2,15 @@ package com.hunter_lc.idcard.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 
 import com.hunter_lc.idcard.gson.Login;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class Utility {
 
@@ -75,5 +78,40 @@ public class Utility {
                 matrix, true);
         return newBmp;
     }
+
+    public static Bitmap getMosaicsBitmaps(Bitmap bmp, double precent) {
+        int bmpW = bmp.getWidth();
+        int bmpH = bmp.getHeight();
+        int[] pixels = new int[bmpH * bmpW];
+        bmp.getPixels(pixels, 0, bmpW, 0, 0, bmpW, bmpH);
+        int raw = (int) (bmpW * precent);
+        int unit;
+        if (raw == 0) {
+            unit = bmpW;
+        } else {
+            unit = bmpW / raw; //原来的unit*unit像素点合成一个，使用原左上角的值
+        }
+        if (unit >= bmpW || unit >= bmpH) {
+            return getMosaicsBitmaps(bmp, precent);
+        }
+        for (int i = 0; i < bmpH; ) {
+            for (int j = 0; j < bmpW; ) {
+                int leftTopPoint = i * bmpW + j;
+                for (int k = 0; k < unit; k++) {
+                    for (int m = 0; m < unit; m++) {
+                        int point = (i + k) * bmpW + (j + m);
+                        if (point < pixels.length) {
+                            pixels[point] = pixels[leftTopPoint];
+                        }
+                    }
+                }
+                j += unit;
+            }
+            i += unit;
+        }
+        return Bitmap.createBitmap(pixels, bmpW, bmpH, Bitmap.Config.ARGB_8888);
+    }
+
+
 
 }

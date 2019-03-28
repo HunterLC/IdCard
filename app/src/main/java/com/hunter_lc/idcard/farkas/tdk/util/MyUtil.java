@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
 import com.hunter_lc.idcard.R;
+import com.hunter_lc.idcard.util.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -233,7 +234,7 @@ public class MyUtil {
         int w = (int) (width * 0.4 + 0.5f);
         int h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_xm = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_xm, bit_xm);
+        //saveFile(file_xm, bit_xm);
         /// 姓名截取 end
 
         ///TODO 性别截取 start  ： x 123(19)   y 112(27.5) w 64(10)  h 36(8.8)
@@ -242,7 +243,7 @@ public class MyUtil {
         w = (int) (width * 0.10 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_xb = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_xb, bit_xb);
+        //saveFile(file_xb, bit_xb);
         /// 性别截取 end
 
         ///TODO 名族截取 start： x 250(38.7)   y 112(27.5) w 139(21.6) h 36(8.8)
@@ -251,7 +252,7 @@ public class MyUtil {
         w = (int) (width * 0.2 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_mz = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_mz, bit_mz);
+       // saveFile(file_mz, bit_mz);
         /// 名族截取 end
 
         ///TODO 年截取 start：   x 123(19)   y 160(39.2) w 64(10)  h 36(8.8)
@@ -260,7 +261,7 @@ public class MyUtil {
         w = (int) (width * 0.10 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_n = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_n, bit_n);
+       // saveFile(file_n, bit_n);
         /// 年截取 end
 
         ///TODO  月截取 start：   x 219(33.9) y 160(39.2) w 32(5)  h 36(8.8)
@@ -269,7 +270,7 @@ public class MyUtil {
         w = (int) (width * 0.05 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_y = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_y, bit_y);
+        //saveFile(file_y, bit_y);
         /// 月截取 end
 
         ///TODO  日截取 start：   x 280(43.4) y 160(39.2) w 32(5)  h 36(8.8)
@@ -278,7 +279,7 @@ public class MyUtil {
         w = (int) (width * 0.05 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_r = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_r, bit_r);
+        //saveFile(file_r, bit_r);
         /// 日截取 end
 
         ///TODO 地址截取 start： x 123(19)   y 216(52.9) w 268(41.6) h 100(24.5)
@@ -287,7 +288,7 @@ public class MyUtil {
         w = (int) (width * 0.416 + 0.5f);
         h = (int) (height * 0.245 + 0.5f);
         Bitmap bit_dz = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_dz, bit_dz);
+        //saveFile(file_dz, bit_dz);
         /// 地直截取 end
 
         ///TODO 身份证号码截取 start： x 221(34.2) y 341(83.5) w 350(54.3) h 36(8.8)
@@ -296,7 +297,7 @@ public class MyUtil {
         w = (int) (width * 0.543 + 0.5f);
         h = (int) (height * 0.088 + 0.5f);
         Bitmap bit_hm = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_hm, bit_hm);
+        //saveFile(file_hm, bit_hm);
         /// 身份证号码截取 end
 
         ///TODO 头像截取
@@ -305,12 +306,34 @@ public class MyUtil {
         w = (int) (width * 0.38 + 0.5f);
         h = (int) (height * 0.65 + 0.5f);
         Bitmap bit_tx = Bitmap.createBitmap(bit, x, y, w, h);
-        saveFile(file_tx, bit_tx);
+        //saveFile(file_tx, bit_tx);
         /// 头像截取 end
 
 
-        ///TODO 保存完整身份证图片 start
-        bit = mergeWithCrop(bit,bit_hm,(float)(width * 0.3),(float)(height * 0.392),255);
+        ///TODO 保存完整身份证图片 start 关键区域加马赛克
+        //将关键区域转为马赛克模式
+        Bitmap bit_newxm,bit_newxb,bit_newn,bit_newy,bit_newr,bit_newmz,bit_newdz,bit_newtx,bit_newhm;
+        bit_newxm = Utility.getMosaicsBitmaps(bit_xm,0.1);  //姓名
+        bit_newxb = Utility.getMosaicsBitmaps(bit_xb,0.1);  //性别
+        bit_newn = Utility.getMosaicsBitmaps(bit_n,0.1);  //年
+        bit_newy = Utility.getMosaicsBitmaps(bit_y,0.1);  //月
+        bit_newr = Utility.getMosaicsBitmaps(bit_r,0.1);  //日
+        bit_newmz = Utility.getMosaicsBitmaps(bit_mz,0.1);  //民族
+        bit_newdz = Utility.getMosaicsBitmaps(bit_dz,0.1);  //地址
+        bit_newtx = Utility.getMosaicsBitmaps(bit_tx,0.1);  //头像
+        bit_newhm = Utility.getMosaicsBitmaps(bit_hm,0.1);  //身份证号码
+
+        //马赛克图片拼接
+        bit = mergeWithCrop(bit,bit_newxm,(float)(width * 0.15),(float)(height * 0.144),255);
+        bit = mergeWithCrop(bit,bit_newxb,(float)(width * 0.15),(float)(height * 0.275),255);
+        bit = mergeWithCrop(bit,bit_newmz,(float)(width * 0.30),(float)(height * 0.275),255);
+        bit = mergeWithCrop(bit,bit_newn,(float)(width * 0.15),(float)(height * 0.392),255);
+        bit = mergeWithCrop(bit,bit_newy,(float)(width * 0.30),(float)(height * 0.392),255);
+        bit = mergeWithCrop(bit,bit_newr,(float)(width * 0.40),(float)(height * 0.392),255);
+        bit = mergeWithCrop(bit,bit_newdz,(float)(width * 0.15),(float)(height * 0.5),255);
+        bit = mergeWithCrop(bit,bit_newhm,(float)(width * 0.30),(float)(height * 0.80),255);
+        bit = mergeWithCrop(bit,bit_newtx,(float)(width * 0.55),(float)(height * 0.144),255);
+
         saveFile(file, bit);
         /// 保存完整身份证图片 end
         json.put("msg", msg);
