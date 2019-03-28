@@ -6,13 +6,13 @@ import java.sql.Blob;
 public class Record extends DataSupport {
     private int id;  //表id
     private int userId;  //用户id
-    private Blob uploadPhoto;   //上传照片
+    private byte[] uploadPhoto;   //上传照片
     private String uploadTime;   //上传时间
     private int photoState;   //照片加密状态
     private String photoPw;   //解密密钥
-    private Blob mosaicPhoto;   //关键区域马赛克照片
+    private byte[] mosaicPhoto;   //关键区域马赛克照片
     private String key;            //加密密码
-    private Blob keyPhoto;    //加密后的图
+    private byte[] keyPhoto;    //加密后的图
 
     public int getId() {
         return id;
@@ -30,11 +30,11 @@ public class Record extends DataSupport {
         this.userId = userId;
     }
 
-    public Blob getUploadPhoto() {
+    public byte[] getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public void setUploadPhoto(Blob uploadPhoto) {
+    public void setUploadPhoto(byte[] uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -62,11 +62,11 @@ public class Record extends DataSupport {
         this.photoPw = photoPw;
     }
 
-    public Blob getMosaicPhoto() {
+    public byte[] getMosaicPhoto() {
         return mosaicPhoto;
     }
 
-    public void setMosaicPhoto(Blob mosaicPhoto) {
+    public void setMosaicPhoto(byte[] mosaicPhoto) {
         this.mosaicPhoto = mosaicPhoto;
     }
 
@@ -78,11 +78,12 @@ public class Record extends DataSupport {
         this.key = key;
     }
 
-    public Blob getKeyPhoto() {
+    public byte[] getKeyPhoto() {
         return keyPhoto;
     }
 
-    public void setKeyPhoto(Blob keyPhoto) {
+    public void setKeyPhoto(byte[] keyPhoto) {
         this.keyPhoto = keyPhoto;
     }
+
 }

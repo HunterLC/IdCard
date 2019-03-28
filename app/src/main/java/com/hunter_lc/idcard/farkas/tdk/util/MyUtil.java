@@ -1,6 +1,9 @@
 package com.hunter_lc.idcard.farkas.tdk.util;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,16 +12,21 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.hunter_lc.idcard.MainActivity;
+import com.hunter_lc.idcard.db.User;
 import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
 import com.hunter_lc.idcard.R;
 import com.hunter_lc.idcard.util.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,6 +38,8 @@ import java.lang.reflect.InvocationTargetException;
  * time：2016/8/24.17:55
  */
 public class MyUtil {
+    public static Bitmap MosaicsBitmap;
+    public static File SaveFile;
     public static Context getAppContext() {
         return MyApp.getInstance();
     }
@@ -333,14 +343,20 @@ public class MyUtil {
         bit = mergeWithCrop(bit,bit_newdz,(float)(width * 0.15),(float)(height * 0.5),255);
         bit = mergeWithCrop(bit,bit_newhm,(float)(width * 0.30),(float)(height * 0.80),255);
         bit = mergeWithCrop(bit,bit_newtx,(float)(width * 0.55),(float)(height * 0.144),255);
-
+        //保存bit
+        MosaicsBitmap = bit;
+        SaveFile = file;
         saveFile(file, bit);
+        //showTips();
         /// 保存完整身份证图片 end
         json.put("msg", msg);
         json.put("state", true);
 
         return json;
     }
+
+
+
 
     private static void saveFile(File file, Bitmap bitmap) throws IOException {
         FileOutputStream stream = new FileOutputStream(file);
@@ -395,7 +411,6 @@ public class MyUtil {
         Paint paint = new Paint();
         paint.setAlpha(alpha);
         canvas.drawBitmap(small, smallX >= 0 ? smallX : 0, smallY >= 0 ? smallY : 0, paint);
-
         return newBmp;
     }
 }

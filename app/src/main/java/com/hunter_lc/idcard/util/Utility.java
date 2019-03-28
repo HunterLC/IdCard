@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class Utility {
@@ -77,6 +78,15 @@ public class Utility {
         Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
                 matrix, true);
         return newBmp;
+    }
+
+    /**
+     * 把Bitmap转Byte
+     */
+    public static byte[] BitmapToBytes(Bitmap bm){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 
     public static Bitmap getMosaicsBitmaps(Bitmap bmp, double precent) {

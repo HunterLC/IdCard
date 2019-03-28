@@ -2,6 +2,7 @@ package com.hunter_lc.idcard.farkas.tdk.view;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -23,10 +24,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.hunter_lc.idcard.MainActivity;
+import com.hunter_lc.idcard.KeyActivity;
 import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
 import com.hunter_lc.idcard.farkas.tdk.util.MyUtil;
-import com.hunter_lc.idcard.farksa.tdk.ocr.NextActivity;
 
 /**
  * author：Administrator
@@ -222,6 +222,9 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
             if (pd == null) {
 //                saveBitmap(data);
                 saveCard(data);
+                Intent intent = new Intent();
+                intent.setClass(MyApp.getInstance(), KeyActivity.class);
+                getContext().startActivity(intent);
             }
         }
 

@@ -48,8 +48,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"/>
         <activity
-            android:name="com.hunter_lc.idcard.MessageActivity"
-            android:label="我的消息"
+            android:name="com.hunter_lc.idcard.KeyActivity"
+            android:label="发送界面"
             android:theme="@style/AppBaseTheme" />
         <activity android:name="com.hunter_lc.idcard.RoomSelectionActivity" />
         <activity

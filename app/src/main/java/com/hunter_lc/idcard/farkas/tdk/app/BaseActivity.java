@@ -34,7 +34,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         initStyle(BASE_PORTRAIT);
 
         setContentView(initLayout());
-        
+
         initViews();
         initValues();
         initListener();
@@ -103,6 +103,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected void onSaveInstanceState(Bundle outState) {
         Log.e(TAG, "缓存");
         saveState(outState);
+        this.finish();
         super.onSaveInstanceState(outState);
     }
 
