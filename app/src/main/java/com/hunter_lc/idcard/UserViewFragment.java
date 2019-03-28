@@ -51,7 +51,7 @@ public class UserViewFragment extends Fragment {
         users = DataSupport.select("*")
                                       .where("account = ?",sharedPreferences.getString("account",null))
                                       .find(User.class);
-        user.setPersonalPhoto(users.get(1).getPersonalPhoto());
+        user.setPersonalPhoto(users.get(0).getPersonalPhoto());
             /*user("000");//用户头像
             user.setId(2019);//用户编号
             user.setName("刘畅");//用户姓名
@@ -61,11 +61,11 @@ public class UserViewFragment extends Fragment {
             //将用户信息加入到list列表中
             //userList.add(String.user.getPersonalPhoto());
         userList.add("000");
-        userList.add(String.valueOf(users.get(1).getId()));
-        userList.add(users.get(1).getName());
-        userList.add(users.get(1).getBirth());
-        userList.add(users.get(1).getNickName());
-        userList.add(users.get(1).getSex()==1?"男":"女");
+        userList.add(String.valueOf(users.get(0).getId()));
+        userList.add(users.get(0).getName());
+        userList.add(users.get(0).getBirth());
+        userList.add(users.get(0).getNickName());
+        userList.add(users.get(0).getSex()==1?"男":"女");
 
 
     }

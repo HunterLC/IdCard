@@ -56,7 +56,7 @@
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme1" parent="android:Theme.NoTitleBar">
-        <item name="@android:windowAnimationStyle">@style/myact</item>
+        <item name="android:windowAnimationStyle">@style/myact</item>
     </style>
     <style name="CustomProgressDialog" parent="@android:style/Theme.Dialog">
     </style>

@@ -15,10 +15,7 @@ import com.hunter_lc.idcard.farkas.tdk.view.CameraSurface;
 import com.hunter_lc.idcard.farkas.tdk.view.CanvasSurface;
 import com.hunter_lc.idcard.R;
 
-/**
- * author：Administrator
- * time：2016/8/26.17:00
- */
+
 public class NextActivity extends BaseActivity {
     private CameraSurface cameraSurface;
     private CanvasSurface canvasSurface;

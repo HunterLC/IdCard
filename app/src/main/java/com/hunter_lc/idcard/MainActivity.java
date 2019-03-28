@@ -259,9 +259,9 @@ public class MainActivity extends AppCompatActivity {
                 .where("account = ?",sharedPreferences.getString("account",null))
                 .find(User.class);
         profile = new ProfileDrawerItem()
-                .withName(users.get(1).getName())
-                .withEmail(users.get(1).getAccount())
-                .withIcon(Utility.getPicFromBytes(users.get(1).getPersonalPhoto(),null))
+                .withName(users.get(0).getName())
+                .withEmail(users.get(0).getAccount())
+                .withIcon(Utility.getPicFromBytes(users.get(0).getPersonalPhoto(),null))
                 .withIdentifier(100);//标识符，当设置监听事件时可以根据这个来区别对象
 
     }

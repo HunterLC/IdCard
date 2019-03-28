@@ -16,9 +16,11 @@ import com.hunter_lc.idcard.R;
 import com.hunter_lc.idcard.farkas.tdk.app.BaseActivity;
 import com.hunter_lc.idcard.farkas.tdk.handler.CameraMainHandler;
 import com.hunter_lc.idcard.farkas.tdk.util.MyUtil;
+import com.hunter_lc.idcard.farkas.tdk.view.CameraSurface;
+import com.hunter_lc.idcard.farksa.tdk.ocr.NextActivity;
 
 public class CameraMainActivity extends BaseActivity {
-//    private CameraSurface cameraSurface;
+    private CameraSurface cameraSurface;
     private ImageView imageView;
     private RelativeLayout parentLayout;
     private Button nextBtn;
@@ -167,7 +169,7 @@ public class CameraMainActivity extends BaseActivity {
     }
 
     private void releaseCamera() {
-//        cameraSurface.releaseCamera();
+        //cameraSurface.releaseCamera();
     }
     /// 私有函数 end
 

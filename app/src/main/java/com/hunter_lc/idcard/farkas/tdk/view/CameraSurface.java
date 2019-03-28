@@ -23,7 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import com.hunter_lc.idcard.MainActivity;
+import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
 import com.hunter_lc.idcard.farkas.tdk.util.MyUtil;
+import com.hunter_lc.idcard.farksa.tdk.ocr.NextActivity;
 
 /**
  * author：Administrator
@@ -114,6 +117,7 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
                 camera.setPreviewDisplay(getHolder());//通过SurfaceView显示取景画面
                 int[] wh = MyUtil.getScreen();
                 initParameters(wh[1], wh[0]);
+
             } catch (IOException e) {
                 Log.e(TAG, e.toString());
             } catch (Exception e) {
@@ -160,6 +164,7 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
      * 旋转镜头成像
      */
     public void rotateCamera() {
+
         camera.stopPreview();
         int rotation = MyUtil.getRotation();
         int degrees = 0;

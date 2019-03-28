@@ -1,6 +1,10 @@
 package com.hunter_lc.idcard.farkas.tdk.app;
 
 import android.app.Application;
+import android.content.Context;
+
+import org.litepal.LitePalApplication;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +13,7 @@ import java.util.Map;
  * time：2016/8/26.9:39
  */
 public class MyApp extends Application {
-    private static MyApp instance;//全局上下文
+    private static Context instance;//全局上下文
 
     private Map<String,Object> map;//全局共享数据
     
@@ -35,14 +39,15 @@ public class MyApp extends Application {
      * 获取application实例对象
      * @return  MyApplication实例对象
      */
-    public static MyApp getInstance() {
+    public static Context getInstance() {
         return instance;
     }
     
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        instance = getApplicationContext();
+        LitePalApplication.initialize(instance);
         
         map = new HashMap<String, Object>();
     }

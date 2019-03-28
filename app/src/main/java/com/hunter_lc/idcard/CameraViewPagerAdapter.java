@@ -9,9 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.hunter_lc.idcard.db.MeetingInfo;
+import com.hunter_lc.idcard.farksa.tdk.ocr.CameraMainActivity;
 
 public class CameraViewPagerAdapter extends RecyclerView.Adapter<CameraViewPagerAdapter.mViewHolder>{
 
@@ -44,7 +43,7 @@ public class CameraViewPagerAdapter extends RecyclerView.Adapter<CameraViewPager
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,MeetingDetailActivity.class);
+                Intent intent = new Intent(context,CameraMainActivity.class);
                 context.startActivity(intent);
             }
         });
