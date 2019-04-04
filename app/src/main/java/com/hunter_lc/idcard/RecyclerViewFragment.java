@@ -58,7 +58,7 @@ public class RecyclerViewFragment extends Fragment {
         List<User> users = DataSupport.select("*")
                 .where("account = ?",sharedPreferences.getString("account",null))
                 .find(User.class);
-        List<Record> records = DataSupport.select("*")
+        List<Record> records = DataSupport.select("uploadTime","userId","receiveUserAccount","key")
                                           .where("userId = ? or receiveUserAccount = ?",String.valueOf(users.get(0).getId()),users.get(0).getAccount())
                                           .order("uploadTime desc")
                                           .find(Record.class);

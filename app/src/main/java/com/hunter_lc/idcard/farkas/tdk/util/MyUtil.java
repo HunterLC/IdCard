@@ -321,6 +321,8 @@ public class MyUtil {
         /// 头像截取 end
         SaveFile = file;
 
+
+        OriginBitmap = mergeWithCrop(bit,bit_xm,(float)(width * 0.15),(float)(height * 0.144),255);
         ///TODO 保存完整身份证图片 start 关键区域加马赛克
         //将关键区域转为马赛克模式
         Bitmap bit_newxm,bit_newxb,bit_newn,bit_newy,bit_newr,bit_newmz,bit_newdz,bit_newtx,bit_newhm;
@@ -360,7 +362,7 @@ public class MyUtil {
 
     private static void saveFile(File file, Bitmap bitmap) throws IOException {
         FileOutputStream stream = new FileOutputStream(file);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
         stream.flush();
         stream.close();
         //bitmap.recycle();

@@ -104,21 +104,11 @@ public class KeyActivity extends AppCompatActivity {
                                 .where("account = ?",sharedPreferences.getString("account",null))
                                 .find(User.class);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        User user2 = new User();
-                        user2.setAccount("123456");
-                        user2.setActLevel(0);
-                        user2.setBirth("1998-02-02");
-                        user2.setId(1);
-                        user2.setLoginTime(sdf.format(new Date()));
-                        user2.setName("刘畅");
-                        user2.setNickName("Hunter_LC");
-                        user2.setSex(1);
-                        user2.setPassword("123456");
-                        user2.save();
+
                         Record record = new Record();
                         record.setUserId(users.get(0).getId());
                         record.setUploadTime(sdf.format(new Date()));
-                        record.setOriginPhoto(Utility.BitmapToBytes(MyUtil.OriginBitmap)); //保存原图
+                        record.setOriginPhoto(filePath); //保存原图
                         record.setMosaicPhoto(Utility.BitmapToBytes(MyUtil.MosaicsBitmap));//保存马赛克图
                         //record.setKeyPhoto(keyBytes);  //保存加密后的图
                         record.setReceiveUserAccount(et.getText().toString()); //保存接收者信息

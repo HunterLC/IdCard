@@ -12,19 +12,20 @@
     <!-- camera -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- sdcard -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--摄像头权限-->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.autofocus"/>
+    <uses-feature android:name="android.hardware.autofocus" />
 
-    <!--SD卡读写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--添加悬浮窗口权限-->
-    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
+    <!-- SD卡读写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- 添加悬浮窗口权限 -->
+    <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> -->
     <application
-        android:name="com.hunter_lc.idcard.farkas.tdk.app.MyApp"
+        android:name=".farkas.tdk.app.MyApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_icon"
         android:label="@string/app_name"
@@ -32,39 +33,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity
-            android:name="com.hunter_lc.idcard.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hunter_lc.idcard.MainActivity" />
-        <activity android:name="com.hunter_lc.idcard.RecyclerViewFragment" />
-        <activity android:name="com.hunter_lc.idcard.MeetingDetailActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RecyclerViewFragment" />
+        <activity android:name=".IdCardDetailActivity" />
         <activity
             android:name=".farksa.tdk.ocr.CameraMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme1"/>
+            android:theme="@style/AppTheme1" />
         <activity
-            android:name="com.hunter_lc.idcard.KeyActivity"
+            android:name=".KeyActivity"
             android:label="发送选项"
             android:theme="@style/AppBaseTheme" />
-        <activity android:name="com.hunter_lc.idcard.RoomSelectionActivity" />
+        <activity android:name=".RoomSelectionActivity" />
         <activity
-            android:name="com.hunter_lc.idcard.SpinnerActivity"
+            android:name=".SpinnerActivity"
             android:theme="@style/AppBaseTheme">
 
         </activity>
-        <activity android:name=".farksa.tdk.ocr.NextActivity"
+        <activity
+            android:name=".farksa.tdk.ocr.NextActivity"
             android:theme="@style/AppTheme1">
             <intent-filter>
-                <action android:name="com.hunter_lc.idcard.farkas.intent.action.VIEW"/>
+                <action android:name="com.hunter_lc.idcard.farkas.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hunter_lc.idcard.RoomDetailActivity">
+        <activity android:name=".RoomDetailActivity">
+
+        </activity>
+        <activity android:name=".RegisterActivity"
+                  android:theme="@style/AppBaseTheme"
+                  android:label="用户注册">
 
         </activity>
     </application>

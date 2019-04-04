@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hunter_lc.idcard.db.User;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity
     SpinKitView spinKitView;
     Button loginButton;
     EditText userAccount,userPassword;
+    TextView register;
     public static String LOGIN_SUCCESS_TOKEN = null;  //全局使用的token
 
     @Override
@@ -86,6 +88,7 @@ public class LoginActivity extends AppCompatActivity
 
         mAnimView = findViewById(R.id.ani_view);
         loginButton = (Button)findViewById(R.id.btn_registered_login);
+        register = (TextView)findViewById(R.id.Tv_registered_msg) ;
 
         mAnimView.setOnAnimationEndListener(new TransitionView.OnAnimationEndListener()
         {
@@ -117,6 +120,11 @@ public class LoginActivity extends AppCompatActivity
         requestLogin();
     }
 
+    public void Register(View view){
+        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
     public void requestLogin(){
         userAccount = (EditText)findViewById(R.id.Ed_uerPhoneNumber);
         userPassword = (EditText)findViewById(R.id.Ed_uerPassword);
@@ -143,7 +151,7 @@ public class LoginActivity extends AppCompatActivity
                 //Toast.makeText(LoginActivity.this,"头像信息"+loginUser.getPersonalPhoto().toString(),Toast.LENGTH_LONG).show();
             }else{
                 spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
-                Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
             }
     }
 }

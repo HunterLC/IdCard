@@ -17,11 +17,11 @@ android {
         }
     }
 
-    splits{
-        abi{
+    splits {
+        abi {
             enable true
             reset()
-            include 'x86','armeabi-v7a'
+            include 'x86', 'armeabi-v7a'
             universalApk true
         }
     }

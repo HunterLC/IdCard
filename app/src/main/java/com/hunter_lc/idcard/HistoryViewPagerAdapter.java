@@ -9,10 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hunter_lc.idcard.db.MeetingInfo;
 import com.hunter_lc.idcard.db.Record;
 import com.hunter_lc.idcard.db.User;
 import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
@@ -55,9 +53,9 @@ public class HistoryViewPagerAdapter extends RecyclerView.Adapter<HistoryViewPag
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Record recordInfo = newList.get(position);
-                Intent intent = new Intent(context,MeetingDetailActivity.class);
-                intent.putExtra(MeetingDetailActivity.ROOM_NAME,recordInfo.getKey());
-                intent.putExtra(MeetingDetailActivity.ROOM_IMAGE_ID,"000");
+                Intent intent = new Intent(context,IdCardDetailActivity.class);
+                intent.putExtra(IdCardDetailActivity.ROOM_NAME,recordInfo.getKey());
+                intent.putExtra(IdCardDetailActivity.ROOM_IMAGE_ID,"000");
                 context.startActivity(intent);
             }
         });
