@@ -25,6 +25,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,48 +40,27 @@ public class KeyActivity extends AppCompatActivity {
 
     private AlertDialog.Builder builder;
     //private String filePath = Environment.getExternalStorageDirectory().getPath()+ "/test/test.jpg";
-    private String filePath = MyUtil.SaveFile.getAbsolutePath();
+    public  static String filePath = MyUtil.SaveFile.getAbsolutePath();
     // AES加密后的文件
     private static final String outPath = Environment.getExternalStorageDirectory().getPath()+ "/DCIM/OCR/encrypt.jpg";
     // 混入字节加密后文件
     private static final String bytePath = Environment.getExternalStorageDirectory().getPath()+ "/test/byte.jpg";
     //AES加密使用的秘钥，注意的是秘钥的长度必须是16位
-    private static final String AES_KEY = "MyDifficultPassw";
+    private static String AES_KEY = null;
     //混入的字节
     private static final String BYTE_KEY = "MyByte";
 
-    ImageView picOne,picTwo ;
+    public static ImageView picOne,picTwo ;
+    public byte[] keyBytes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_key);
         picOne = (ImageView)findViewById(R.id.pic_one_show);
-        picTwo = (ImageView)findViewById(R.id.pic_two_show);
         picOne.setImageBitmap(MyUtil.MosaicsBitmap);
-        showTips();
+        sendTo();
 
-    }
-
-    public void showTips(){
-        builder = new AlertDialog.Builder(this,R.style.dialog)
-                .setIcon(R.mipmap.ic_launcher)
-                .setTitle("是否需要添加额外的一串秘密文本信息？")
-                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //finish();
-                        aesEncrypt();
-                        aesDecrypt();
-                    }
-                })
-                .setNegativeButton("暂不", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sendTo();
-                    }
-                });
-        builder.create().show();
     }
 
     public void sendTo(){
@@ -91,18 +72,59 @@ public class KeyActivity extends AppCompatActivity {
                 .setPositiveButton("发送", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //加密用户身份证照片
+                        aesEncrypt();//加密
+                        //获取图片的字节流
+                        try{
+                            FileInputStream stream = new FileInputStream(new File(outPath));
+                            ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+                            byte[] b = new byte[1024];
+                            int n;
+                            int k=0;
+                            while ((n = stream.read(b)) != -1) {
+                                    out.write(b, 0, n);
+                                k++;
+                            }
+                            stream.close();
+                            out.close();
+                            //获取字节流显示图片
+                            keyBytes= out.toByteArray();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(keyBytes, 0, keyBytes.length);
+                            picOne.setImageBitmap(bitmap);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                        aesDecrypt();//解密
                         //获取用户信息
                         SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
                         List<User> users = DataSupport.select("*")
                                 .where("account = ?",sharedPreferences.getString("account",null))
                                 .find(User.class);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        User user2 = new User();
+                        user2.setAccount("123456");
+                        user2.setActLevel(0);
+                        user2.setBirth("1998-02-02");
+                        user2.setId(1);
+                        user2.setLoginTime(sdf.format(new Date()));
+                        user2.setName("刘畅");
+                        user2.setNickName("Hunter_LC");
+                        user2.setSex(1);
+                        user2.setPassword("123456");
+                        user2.save();
                         Record record = new Record();
                         record.setUserId(users.get(0).getId());
                         record.setUploadTime(sdf.format(new Date()));
-                        record.setMosaicPhoto(Utility.BitmapToBytes(MyUtil.MosaicsBitmap));
+                        record.setOriginPhoto(Utility.BitmapToBytes(MyUtil.OriginBitmap)); //保存原图
+                        record.setMosaicPhoto(Utility.BitmapToBytes(MyUtil.MosaicsBitmap));//保存马赛克图
+                        //record.setKeyPhoto(keyBytes);  //保存加密后的图
+                        record.setReceiveUserAccount(et.getText().toString()); //保存接收者信息
+                        Log.d(".........",et.getText().toString());
+                        record.setKey(AES_KEY);
                         record.save();
-                        Toast.makeText(KeyActivity.this,"发送成功"+record.getUploadTime()+record.getMosaicPhoto().toString(),Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 })
@@ -171,10 +193,10 @@ public class KeyActivity extends AppCompatActivity {
     /**
      * 使用AES加密标准进行加密
      */
-    public void aesEncrypt()  {
+    public static void aesEncrypt()  {
         try {
+            AES_KEY = Utility.getGUID();
             FileInputStream fis = null;
-            Log.d("22222222222222222222222",filePath);
             fis = new FileInputStream(filePath);
             FileOutputStream fos = new FileOutputStream(outPath);
             //SecretKeySpec此类来根据一个字节数组构造一个 SecretKey
@@ -182,6 +204,7 @@ public class KeyActivity extends AppCompatActivity {
                     "AES");
             //Cipher类为加密和解密提供密码功能,获取实例
             Cipher cipher = Cipher.getInstance("AES");
+            Log.d("KeyActivity",sks.toString());
             //初始化
             cipher.init(Cipher.ENCRYPT_MODE, sks);
             //CipherOutputStream 为加密输出流
@@ -198,12 +221,13 @@ public class KeyActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
     }
 
     /**
      * 使用AES标准解密
      */
-    public void aesDecrypt() {
+    public static void aesDecrypt() {
         try {
             FileInputStream fis = null;
             fis = new FileInputStream(outPath);
@@ -225,7 +249,6 @@ public class KeyActivity extends AppCompatActivity {
             //获取字节流显示图片
             byte[] bytes= out.toByteArray();
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            picTwo.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }

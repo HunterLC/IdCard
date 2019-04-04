@@ -2,6 +2,7 @@ package com.hunter_lc.idcard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,32 +13,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hunter_lc.idcard.db.MeetingInfo;
+import com.hunter_lc.idcard.db.Record;
+import com.hunter_lc.idcard.db.User;
+import com.hunter_lc.idcard.farkas.tdk.app.MyApp;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
 public class HistoryViewPagerAdapter extends RecyclerView.Adapter<HistoryViewPagerAdapter.mViewHolder>{
 
     Context context;
-    List<MeetingInfo> newList;
-    public HistoryViewPagerAdapter(List<MeetingInfo> newList) {
+    List<Record> newList;
+    public HistoryViewPagerAdapter(List<Record> newList) {
         this.newList = newList;
     }
 
     static class mViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        TextView title,speaker,time,location;
-        ImageView img;
+        TextView uIdView,upLoadTimeView;
 
         public mViewHolder(View itemView) {
             super(itemView);
             //拿到所有控件
             cardView= itemView.findViewById(R.id.card_view);
-            img= itemView.findViewById(R.id.meeting_img);
-            title= itemView.findViewById(R.id.meeting_title);
-            speaker= itemView.findViewById(R.id.meeting_speaker);
-            time = itemView.findViewById(R.id.meeting_time);
-            location = itemView.findViewById(R.id.meeting_location);
+            uIdView= itemView.findViewById(R.id.user_id_view);
+            upLoadTimeView=itemView.findViewById(R.id.send_time_view);
+
         }
     }
 
@@ -51,10 +54,10 @@ public class HistoryViewPagerAdapter extends RecyclerView.Adapter<HistoryViewPag
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                MeetingInfo meetingInfo = newList.get(position);
+                Record recordInfo = newList.get(position);
                 Intent intent = new Intent(context,MeetingDetailActivity.class);
-                intent.putExtra(MeetingDetailActivity.ROOM_NAME,meetingInfo.getTitle());
-                intent.putExtra(MeetingDetailActivity.ROOM_IMAGE_ID,meetingInfo.getId());
+                intent.putExtra(MeetingDetailActivity.ROOM_NAME,recordInfo.getKey());
+                intent.putExtra(MeetingDetailActivity.ROOM_IMAGE_ID,"000");
                 context.startActivity(intent);
             }
         });
@@ -65,11 +68,21 @@ public class HistoryViewPagerAdapter extends RecyclerView.Adapter<HistoryViewPag
     @Override
     public void onBindViewHolder(mViewHolder holder, int position) {
         int i=position;
-        holder.img.setImageResource(newList.get(i).getId());
-        holder.title.setText(newList.get(i).getTitle());
-        holder.speaker.setText(newList.get(i).getSponsor());
-        holder.time.setText(String.valueOf(newList.get(i).getStartTime()));
-        holder.location.setText(newList.get(i).getId());
+        SharedPreferences sharedPreferences = MyApp.getInstance().getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
+        List<User> users1 = DataSupport.select("*")
+                .where("id = ?",String.valueOf(newList.get(i).getUserId()))
+                .find(User.class);
+        List<User> users2 = DataSupport.select("*")
+                .where("account = ?",newList.get(i).getReceiveUserAccount())
+                .find(User.class);
+        String text = null;
+        if(sharedPreferences.getString("account",null).equals(newList.get(i).getReceiveUserAccount())){
+            text = "接收来自"+users1.get(0).getName()+"的消息";
+        }else{
+            text = "发送给"+users2.get(0).getName()+"的消息";
+        }
+        holder.uIdView.setText(text);
+        holder.upLoadTimeView.setText(newList.get(i).getUploadTime());
 
     }
 
@@ -79,3 +92,4 @@ public class HistoryViewPagerAdapter extends RecyclerView.Adapter<HistoryViewPag
     }
 
 }
+

@@ -137,12 +137,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_information:
-                       Toast.makeText(MainActivity.this,"你点击了消息通知",Toast.LENGTH_SHORT).show();
-                       Intent intent = new Intent(MainActivity.this,KeyActivity.class);
-                       startActivity(intent);
-
-                        break;
                 }
                 return false;
             }
@@ -228,11 +222,11 @@ public class MainActivity extends AppCompatActivity {
                             case 50:
                                 SharedPreferences sharedPreferences = getSharedPreferences("loginInfo", Context.MODE_PRIVATE);
                                 sharedPreferences.edit().clear().apply();
-                                Intent intentLogin = new Intent(MainActivity.this,LoginActivity.class);
-                                startActivity(intentLogin);
+                                Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
+                                startActivity(intent1);
                                 finish();
                             default:
-                                Toast.makeText(MainActivity.this, drawerItem.getIdentifier() + " is clicked", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, drawerItem.getIdentifier() + " is clicked", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return false;
@@ -396,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
             if(drawerItem instanceof Nameable) {
-                Toast.makeText(MainActivity.this,((Nameable)drawerItem).getName() + "'s check is" + isChecked,Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this,((Nameable)drawerItem).getName() + "'s check is" + isChecked,Toast.LENGTH_SHORT).show();
             }
 
         }

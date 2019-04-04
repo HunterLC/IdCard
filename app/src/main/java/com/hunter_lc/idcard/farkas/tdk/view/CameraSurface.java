@@ -332,7 +332,7 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
                         }
                         break;
                     case 3:
-                        Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, msg.obj.toString(), Toast.LENGTH_LONG).show();
                         break;
                 }
             }

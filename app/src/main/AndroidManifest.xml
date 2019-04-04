@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme1"/>
         <activity
             android:name="com.hunter_lc.idcard.KeyActivity"
-            android:label="发送界面"
+            android:label="发送选项"
             android:theme="@style/AppBaseTheme" />
         <activity android:name="com.hunter_lc.idcard.RoomSelectionActivity" />
         <activity

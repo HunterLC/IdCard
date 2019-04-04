@@ -38,7 +38,7 @@ import java.lang.reflect.InvocationTargetException;
  * time：2016/8/24.17:55
  */
 public class MyUtil {
-    public static Bitmap MosaicsBitmap;
+    public static Bitmap MosaicsBitmap,OriginBitmap;
     public static File SaveFile;
     public static Context getAppContext() {
         return MyApp.getInstance();
@@ -236,6 +236,7 @@ public class MyUtil {
         }
 
         Bitmap bit = Bitmap.createBitmap(bitmap, margin, margin, width, height);
+        OriginBitmap = bit;
         bitmap.recycle();
 
         ///TODO 姓名截取 start ： x 123(19)   y 59(144)    w 268(41.6) h 36(8.8)
@@ -318,7 +319,7 @@ public class MyUtil {
         Bitmap bit_tx = Bitmap.createBitmap(bit, x, y, w, h);
         //saveFile(file_tx, bit_tx);
         /// 头像截取 end
-
+        SaveFile = file;
 
         ///TODO 保存完整身份证图片 start 关键区域加马赛克
         //将关键区域转为马赛克模式
@@ -345,8 +346,7 @@ public class MyUtil {
         bit = mergeWithCrop(bit,bit_newtx,(float)(width * 0.55),(float)(height * 0.144),255);
         //保存bit
         MosaicsBitmap = bit;
-        SaveFile = file;
-        saveFile(file, bit);
+        saveFile(file, OriginBitmap);
         //showTips();
         /// 保存完整身份证图片 end
         json.put("msg", msg);

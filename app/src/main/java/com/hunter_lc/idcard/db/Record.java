@@ -13,6 +13,26 @@ public class Record extends DataSupport {
     private byte[] mosaicPhoto;   //关键区域马赛克照片
     private String key;            //加密密码
     private byte[] keyPhoto;    //加密后的图
+    private byte[] originPhoto;  //原始图片
+
+    public String getReceiveUserAccount() {
+        return receiveUserAccount;
+    }
+
+    public void setReceiveUserAccount(String receiveUserAccount) {
+        this.receiveUserAccount = receiveUserAccount;
+    }
+
+    private String receiveUserAccount;   //接收者id
+
+
+    public byte[] getOriginPhoto() {
+        return originPhoto;
+    }
+
+    public void setOriginPhoto(byte[] originPhoto) {
+        this.originPhoto = originPhoto;
+    }
 
     public int getId() {
         return id;

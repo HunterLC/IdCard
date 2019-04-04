@@ -34,7 +34,7 @@
 
                 <LinearLayout
                     android:id="@+id/linear_userPhone_line"
-                    android:layout_width="310dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -49,35 +49,17 @@
 
                     <EditText
                         android:id="@+id/Ed_uerPhoneNumber"
-                        android:layout_width="0dp"
+                        android:layout_width="263dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="20dp"
                         android:layout_weight="8"
                         android:hint="请输入账号"
+                        android:maxLength="16"
                         android:textColor="@color/md_black_1000"
                         android:textColorHint="@color/primary_dark"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/icon_PhoneNumber_clean"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/linear_userPhone_line"
-                    android:src="@drawable/login_password"
-                    android:visibility="invisible" />
-
-                <View
-                    android:id="@+id/view_phoneNumber_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/linear_userPhone_line"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/md_black_1000" />
 
             </RelativeLayout>
 
@@ -122,35 +104,6 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/icon_Password_clean"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/linear_userPassword_line"
-                    android:src="@drawable/login_password"
-                    android:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/icon_eye_type"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@id/icon_Password_clean"
-                    android:src="@drawable/login_password"
-                    android:visibility="visible"/>
-
-                <View
-                    android:id="@+id/view_phonePassword_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/linear_userPassword_line"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/md_black_1000" />
             </RelativeLayout>
 
             <LinearLayout

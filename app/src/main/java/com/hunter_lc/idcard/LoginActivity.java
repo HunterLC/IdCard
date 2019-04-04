@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity
             user.setPassword("123456");
             user.setPersonalPhoto(img(R.drawable.ic_icon));
             user.save();
+
         }
 
         mAnimView = findViewById(R.id.ani_view);
@@ -139,7 +140,7 @@ public class LoginActivity extends AppCompatActivity
                 userAccount.setFocusable(false);//账号编辑框不可点击
                 userPassword.setFocusable(false);//密码框不可点击
                 mAnimView.startAnimation();   //登陆成功动画
-                Toast.makeText(LoginActivity.this,"头像信息"+loginUser.getPersonalPhoto().toString(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this,"头像信息"+loginUser.getPersonalPhoto().toString(),Toast.LENGTH_LONG).show();
             }else{
                 spinKitView.setVisibility(View.INVISIBLE);//关闭加载动画
                 Toast.makeText(LoginActivity.this,"获取登录信息失败",Toast.LENGTH_LONG).show();
